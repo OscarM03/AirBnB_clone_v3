@@ -11,9 +11,12 @@ from models.amenity import Amenity
                  methods=['GET'], strict_slashes=False)
 def get_amenities():
     """"Get amenity"""
-    amenities = storage.all(Amenity).values()
+    amenities = storage.all(Amenity)
+    amenities_list = []
+    for amenity in amenities.values():
+        amenities_list.append(amenity.to_dict())
 
-    return jsonify([amenity.to_dict() for amenity in amenities])
+    return jsonify(amenities_list)
 
 
 @app_views.route('/amenities/<amenity_id>',
@@ -52,6 +55,7 @@ def create_amenity():
         abort(400, "Missing name")
 
     new_obj = Amenity(**data)
+    storage.new(new_obj)
     new_obj.save()
     return jsonify(new_obj.to_dict()), 201
 

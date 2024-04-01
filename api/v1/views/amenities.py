@@ -56,7 +56,7 @@ def create_amenity():
 
     new_obj = Amenity(**data)
     storage.new(new_obj)
-    new_obj.save()
+    storage.save()
     return jsonify(new_obj.to_dict()), 201
 
 

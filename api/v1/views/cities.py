@@ -63,6 +63,7 @@ def create_city(state_id):
 
     new_obj = City(**data)
     new_obj.state_id = state_id
+    storage.new(new_obj)
     new_obj.save()
     return jsonify(new_obj.to_dict()), 201
 

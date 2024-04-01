@@ -62,6 +62,9 @@ def create_place(city_id):
     if 'user_id' not in data:
         abort(400, "Missing name")
 
+    if 'name' not in data:
+        abort(400, "Missing name")
+
     user_id = data['user_id']
     user = storage.get(User, user_id)
     if user is None:
@@ -69,6 +72,7 @@ def create_place(city_id):
 
     new_obj = Place(**data)
     new_obj.city_id = city_id
+    storage.new(new_obj)
     new_obj.save()
     return jsonify(new_obj.to_dict()), 201
 

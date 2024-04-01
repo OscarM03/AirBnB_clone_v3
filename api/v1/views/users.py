@@ -16,7 +16,7 @@ def all_users():
     return jsonify(users_list)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'], strict_shlashes=False)
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def get_user(user_id):
     """"Get specific users"""
     user = storage.get(User, user_id)

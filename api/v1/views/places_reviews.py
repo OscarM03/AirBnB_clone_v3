@@ -3,8 +3,9 @@ from flask import Flask, abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
 from models.review import Review
-from models.place import Place 
+from models.place import Place
 from models.user import User
+
 
 @app_views.route('/places/<place_id>/reviews',
                  methods=['GET'], strict_slashes=False)
@@ -62,7 +63,7 @@ def create_review(place_id):
 
     if 'text' not in data:
         abort(400, "Missing text")
-    
+
     user_id = data['user_id']
     user = storage.get(User, user_id)
     if user is None:
@@ -88,7 +89,8 @@ def update_review(review_id):
         abort(400, "Not a JSON")
 
     for key, value in data.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id',
+                       'created_at', 'updated_at']:
             setattr(review, key, value)
     storage.save()
     return jsonify(review.to_dict()), 200
